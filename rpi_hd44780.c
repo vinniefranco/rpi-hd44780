@@ -64,6 +64,19 @@ void lcd_send_byte( const unsigned char u8_byte, int mode )
   lcd_epulse(mode);
 }
 
+void lcd_send_nibble( const unsigned char u8_byte, int mode )
+{
+
+  int i, b;
+
+  for ( i=0; i<4; ++i )
+  {
+    b = i+4;
+    bcm2835_gpio_write(HD_DATAPINS[i], ((u8_byte>>b) & 0x01));
+  }
+
+  lcd_epulse(mode);
+}
 
 void lcd_epulse ( int narrow )
 {
@@ -90,11 +103,7 @@ int lcd_init( void )
   // Wait more than 15ms after VCC rises to 4.5V
   usleep(P_15MS);
 
-  bcm2835_gpio_write(H_D4, 1);
-  bcm2835_gpio_write(H_D5, 1);
-  bcm2835_gpio_write(H_D6, 0);
-  bcm2835_gpio_write(H_D7, 0);
-  lcd_epulse(0);
+  lcd_send_nibble(0x30, 0);
 
   // Wait for more than 4.1ms
   for ( i=0; i<2; ++i )
@@ -103,11 +112,7 @@ int lcd_init( void )
   }
 
   // Interface to 4-bit
-  bcm2835_gpio_write(H_D4, 0);
-  bcm2835_gpio_write(H_D5, 1);
-  bcm2835_gpio_write(H_D6, 0);
-  bcm2835_gpio_write(H_D7, 0);
-  lcd_epulse(0);
+  lcd_send_nibble(0x20, 0);
 
   for ( i=0; i<5; ++i )
   {

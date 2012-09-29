@@ -50,42 +50,47 @@ int HD_DATAPINS[4] = {
 };
 
 /*
- *
+ * Set GPIO pins to OUTPUT
  */
 int  lcd_set_gpio_pins ( void );
 
 /*
- *
+ * Initialize screen
  */
 int  lcd_init ( void );
 
 /*
- *
+ * Clear screen command
  */
 void lcd_clear_screen ( void );
 
 /*
- *
+ * Set cursor to memory addr
  */
 void lcd_set_cursor ( unsigned char u8_line );
 
 /*
- *
+ * Send single char
  */
 void lcd_send_char ( const char u8_char );
 
 /*
- *
+ * Send character string
  */
-int  lcd_send_string ( const char *str );
+int lcd_send_string ( const char *str );
 
 /*
- *
+ * Send byte
  */
 void lcd_send_byte ( const unsigned char u8_byte, int mode );
 
 /*
- *
+ * Send half a byte
+ */
+void lcd_send_nibble( const unsigned char u8_byte, int mode );
+
+/*
+ * Pulse E for command data
  */
 void lcd_epulse ( int narrow );
 
