@@ -36,7 +36,7 @@ int lcd_set_gpio_pins( void )
     usleep(1);
 
     // Set all pins LOW
-    bcm2835_gpio_write(pins[i], 0);
+    bcm2835_gpio_write(HD_PINS[i], 0);
   }
 
   return 0;
@@ -51,7 +51,7 @@ void lcd_send_byte( const unsigned char u8_byte, int mode )
 
   for ( i=0; i<8; ++i )
   {
-    int p = i%4, b = (i>>2 == 0)? i+4 : i-4;
+    int p = i%4, b = (i>>2)? i-4 : i+4;
     bcm2835_gpio_write(HD_DATAPINS[p], ((u8_byte>>b) & 0x01));
 
     if ( i == 3 )
@@ -67,10 +67,10 @@ void lcd_send_byte( const unsigned char u8_byte, int mode )
 
 void lcd_epulse ( int narrow )
 {
-  bcm2835_gpio_write(E, 1);
+  bcm2835_gpio_write(H_E, 1);
   usleep(1);
 
-  bcm2835_gpio_write(E, 0);
+  bcm2835_gpio_write(H_E, 0);
   (narrow)? usleep(P_NARROW) : usleep(P_WIDE);
 }
 
@@ -111,7 +111,7 @@ int lcd_init( void )
 
   for ( i=0; i<5; ++i )
   {
-    lcd_send_byte(u8_cmds[p], 0);
+    lcd_send_byte(u8_cmds[i], 0);
   }
 }
 
