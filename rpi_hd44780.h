@@ -87,7 +87,7 @@ void lcd_send_byte ( const unsigned char u8_byte, int mode );
 /*
  * Send half a byte
  */
-void lcd_send_nibble( const unsigned char u8_byte, int mode );
+void lcd_send_nibble ( const unsigned char u8_byte, int mode );
 
 /*
  * Pulse E for command data
