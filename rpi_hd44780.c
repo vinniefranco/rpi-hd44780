@@ -147,7 +147,7 @@ int lcd_send_string( const char *str )
     return 1; // Nothing was passed
   }
 
-  while ( *str != '\0' )
+  while ( *str )
   {
     lcd_send_byte( *str++, 1 );
   }
